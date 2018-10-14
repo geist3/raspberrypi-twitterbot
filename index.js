@@ -2,6 +2,8 @@ var twit = require('twit')
 var config = require('./config') 
 var Twitter = new twit(config)
 
+console.log("start");
+
 var retweet = function() {
     var params = {
         q: 'doggo OR pupper',
@@ -35,7 +37,9 @@ var retweet = function() {
     });
 }
 
-//retweet();
+console.log("a");
+retweet();
+
 // retweet every 3 minutes
 setInterval(retweet, 180000);
 
@@ -51,14 +55,15 @@ function tweetEvent(tweet) {
     // Now send a reply back to the sender
     var reply='You mentioned jtwitbot1! @' + name + ' ' + 'Bork bork!';
     var params = {
-        status: reply, in_reply_to_status_id: nameID
+        status: reply, in_reply_to_status_id: name
     };
 
+    console.log("We got a mention! " + reply);
     Twitter.post('statuses/update', params,
     function(err, data,response) {
         if (err !== undefined) {
             //Report error if response tweet fails
-            console.log(err);
+            console.log("Error!", err);
         } else {
             //Report success
             console.log('Tweeted: ' + params.status);
@@ -76,8 +81,10 @@ function tweetEvent(tweet) {
 
                 // Turn LED off
                 led.unexport();
-            }, 2000);
+            }, 5000);
             // End blinking after 2 seconds
         }
     })
 };
+
+console.log("end");

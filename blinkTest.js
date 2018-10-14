@@ -1,17 +1,22 @@
 // File to test blinking led
 var Gpio = require('onoff').Gpio,
- led = new Gpio(4, 'out');
+led = new Gpio(4, 'out');
+
+// Blink after .5 seconds
 var iv = setInterval(function () {
- led.writeSync(led.readSync() === 0 ? 1 : 0)
+  console.log("toggle");
+  led.writeSync(led.readSync() === 0 ? 1 : 0)
 }, 500);
 
-// Toggle state of the LED every half second
+// Turn off led after 10 secs
 setTimeout(function () {
- clearInterval(iv);
- led.writeSync(0);
+  clearInterval(iv);
+  led.writeSync(0);
  
  // Turn LED off
  led.unexport();
+ console.log("off");
+
 
  // End blinking after 2 seconds
-}, 2000); 
+}, 10000); 
